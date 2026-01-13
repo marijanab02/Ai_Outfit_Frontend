@@ -2,29 +2,28 @@ import { useState } from "react";
 import api from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import { SketchPicker } from "react-color";
+import "./Login.css";
+import fashionImg from "../assets/nova2.jpeg";
 
 function Register() {
-
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
-
-// unutar komponente
-    const [colors, setColors] = useState([]);
-
-    const handleAddColor = (color) => {
-    setColors([...colors, color.hex]);
-    };
+  const [colors, setColors] = useState([]);
+  const [showPicker, setShowPicker] = useState(false);
 
   const navigate = useNavigate();
 
+  const handleAddColor = (color) => {
+    setColors((prev) => [...prev, color.hex]);
+  };
+
   const register = async () => {
     if (password !== passwordConfirmation) {
-      alert("Lozinke se ne podudaraju!");
+      alert("Passwords do not match!");
       return;
     }
 
@@ -33,41 +32,132 @@ function Register() {
         name,
         email,
         password,
-        password_confirmation: passwordConfirmation, // Laravel koristi ovo za "confirmed"
+        password_confirmation: passwordConfirmation,
         location_city: city,
         location_country: country,
-        color_preferences: colors
+        color_preferences: colors,
       });
 
-      console.log(res.data);
       localStorage.setItem("token", res.data.token);
-      alert("Registracija uspješna!");
+      alert("Sign up successful!");
       navigate("/dashboard");
     } catch (err) {
-      console.error(err.response?.data);
-      alert("Registracija nije uspjela!");
+      alert("Sign up failed!");
     }
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "50px auto" }}>
-      <h2>Registracija</h2>
-      <input placeholder="Ime" value={name} onChange={(e) => setName(e.target.value)} />
-      <input placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <input placeholder="Lozinka" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <input placeholder="Potvrdi lozinku" type="password" value={passwordConfirmation} onChange={(e) => setPasswordConfirmation(e.target.value)} />
-      <input placeholder="Grad" value={city} onChange={(e) => setCity(e.target.value)} />
-      <input placeholder="Država" value={country} onChange={(e) => setCountry(e.target.value)} />
-      <label>Boje koje volim</label>
-        <SketchPicker
-            color="#fff"
-            onChangeComplete={handleAddColor}
-        />
-        <div>
-            Odabrane boje: {colors.map(c => <span key={c} style={{background:c, width:20, height:20, display:"inline-block", marginRight:5}}></span>)}
+    <div className="login-page">
+      <div className="login-card">
+        {/* LIJEVO */}
+        <div
+          className="login-left"
+          style={{ backgroundImage: `url(${fashionImg})` }}
+        >
+          <div className="login-left-overlay">
+            <div className="login-left-content">
+              <h2>CLUELESS WARDROBE</h2>
+              <p>SIGN UP</p>
+            </div>
+          </div>
         </div>
 
-      <button onClick={register}>Registriraj se</button>
+        {/* DESNO */}
+        <div className="login-right register-right">
+          <div className="avatar">👤</div>
+          <h2>SIGN UP</h2>
+
+          {/* 2 stupca */}
+          <div className="form-grid">
+            <div className="input-group">
+              <input
+                placeholder="Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+
+            <div className="input-group">
+              <input
+                placeholder="Email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+
+            <div className="input-group">
+              <input
+                placeholder="Password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+
+            <div className="input-group">
+              <input
+                placeholder="Confirm password"
+                type="password"
+                value={passwordConfirmation}
+                onChange={(e) => setPasswordConfirmation(e.target.value)}
+              />
+            </div>
+
+            <div className="input-group">
+              <input
+                placeholder="City"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+              />
+            </div>
+
+            <div className="input-group">
+              <input
+                placeholder="Country"
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+              />
+            </div>
+          </div>
+
+          {/* Color preferences - otvara se na klik */}
+          <div className="colors-block">
+            <div className="colors-label">Color preferences</div>
+
+            <div
+              className="color-trigger"
+              onClick={() => setShowPicker(!showPicker)}
+            >
+              {colors.length === 0 ? "Choose colors" : "Edit colors"}
+            </div>
+
+            {showPicker && (
+              <div className="picker-popup">
+                <SketchPicker color="#fff" onChangeComplete={handleAddColor} />
+              </div>
+            )}
+
+            <div className="colors-preview">
+              {colors.map((c, idx) => (
+                <span
+                  key={`${c}-${idx}`}
+                  className="color-dot"
+                  style={{ background: c }}
+                />
+              ))}
+            </div>
+          </div>
+
+          <span className="forgot" onClick={() => navigate("/")}>
+            Already have an account? SIGN IN
+          </span>
+
+          <button onClick={register} className="login-btn">
+            SIGN UP
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

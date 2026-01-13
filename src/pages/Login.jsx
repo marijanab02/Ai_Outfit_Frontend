@@ -1,37 +1,75 @@
 import api from "../api/axios";
 import { useState } from "react";
+import "./Login.css";
+import fashionImg from "../assets/nova2.jpeg"; 
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const login = async () => {
     try {
       const res = await api.post("/login", { email, password });
-      console.log(res.data); // vidiš token i user objekt
       localStorage.setItem("token", res.data.token);
-      alert("Login uspješan!");
+      alert("Sign in successful!");
     } catch (err) {
-      console.error(err.response.data);
-      alert("Login neuspješan!");
+      alert("Sign in failed!");
     }
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <input
-        placeholder="Email"
-        onChange={e => setEmail(e.target.value)}
-        value={email}
-      />
-      <input
-        placeholder="Password"
-        type="password"
-        onChange={e => setPassword(e.target.value)}
-        value={password}
-      />
-      <button onClick={login}>Login</button>
+    <div className="login-page">
+      <div className="login-card">
+        {/* LIJEVO */}
+        <div
+          className="login-left"
+          style={{ backgroundImage: `url(${fashionImg})` }}
+        >
+          <div className="login-left-overlay">
+            <div className="login-left-content">
+              <h2>CLUELESS WARDROBE</h2>
+              <p>SIGN IN</p>
+            </div>
+          </div>
+        </div>
+
+        {/* DESNO */}
+        <div className="login-right">
+          <div className="avatar">👤</div>
+          <h2>SIGN IN</h2>
+
+          <div className="input-group">
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+            />
+          </div>
+
+          <div className="input-group">
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+            />
+          </div>
+
+          <span
+            className="forgot"
+            onClick={() => navigate("/register")}
+          >
+            SIGN UP
+          </span>
+
+          <button onClick={login} className="login-btn">
+            SIGN IN
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
