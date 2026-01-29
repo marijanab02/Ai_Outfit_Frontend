@@ -3,6 +3,7 @@ import api from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import { SketchPicker } from "react-color";
 import "./Login.css";
+import "./Register.css";
 import fashionImg from "../assets/nova2.jpeg";
 
 function Register() {
@@ -48,7 +49,7 @@ function Register() {
 
   return (
     <div className="login-page">
-      <div className="login-card">
+      <div className="login-card register-card">
         {/* LIJEVO */}
         <div
           className="login-left"
@@ -149,7 +150,7 @@ function Register() {
             </div>
           </div>
 
-          <span className="forgot" onClick={() => navigate("/")}>
+          <span className="forgot" onClick={() => navigate("/login")}>
             Already have an account? SIGN IN
           </span>
 
