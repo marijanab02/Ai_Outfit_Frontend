@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import AddClothingItem from "./pages/AddClothingItem";
 import Wardrobe from "./pages/Wardrobe";
+import OutfitSuggestion from "./pages/OutfitSuggestion";
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
 
         <Route path="/wardrobe/add" element={<AddClothingItem />} />
         <Route path="/wardrobe" element={<Wardrobe />} />
+        <Route path="/outfit-suggestion" element={<OutfitSuggestion />} />
       </Routes>
     </Router>
   );
