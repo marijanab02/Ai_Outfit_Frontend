@@ -166,3 +166,24 @@
     font-size: 48px;
   }
 }
+
+.dash-features {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.dash-pill {
+  padding: 8px 12px;
+  border-radius: 999px;
+  color: #fff;
+  font-weight: 800;
+  font-size: 13px;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(6px);
+  text-shadow: 0 6px 18px rgba(0,0,0,0.20);
+}
+
