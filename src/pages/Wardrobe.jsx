@@ -1,118 +1,185 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import "./Wardrobe.css";
+import "./Dashboard.css";
 
 export default function Wardrobe() {
   const [wardrobe, setWardrobe] = useState({});
   const [loading, setLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+  const didFetch = useRef(false);
+
+  const fetchWardrobe = async () => {
+    try {
+      setHasError(false);
+      setLoading(true);
+
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setHasError(true);
+        setWardrobe({});
+        return;
+      }
+
+    const res = await axios.get("http://localhost:8000/api/wardrobe", {
+  headers: { Authorization: `Bearer ${token}` },
+});
+
+
+
+
+      setWardrobe(res.data || {});
+    } catch (err) {
+      console.error(err);
+      setHasError(true);
+      setWardrobe({});
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchWardrobe = async () => {
-      try {
-        await axios.get("http://localhost:8000/sanctum/csrf-cookie", {
-          withCredentials: true,
-        });
-
-        const res = await axios.get("http://localhost:8000/api/wardrobe", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          withCredentials: true,
-        });
-
-        setWardrobe(res.data);
-      } catch (err) {
-        console.error(err);
-        alert("Greška pri dohvaćanju ormara");
-      } finally {
-        setLoading(false);
-      }
-    };
-
+    if (didFetch.current) return;
+    didFetch.current = true;
     fetchWardrobe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
-  if (loading) return <p>Učitavanje ormara...</p>;
+
+  const handleDelete = async (category, itemId) => {
+    if (!window.confirm("Jeste li sigurni da želite obrisati ovaj predmet?")) return;
+
+    try {
+      const token = localStorage.getItem("token");
+    await axios.delete(`http://localhost:8000/api/wardrobe/${itemId}`, {
+  headers: { Authorization: `Bearer ${token}` },
+});
+
+
+
+
+      setWardrobe((prev) => ({
+        ...prev,
+        [category]: (prev[category] || []).filter((i) => i.id !== itemId),
+      }));
+    } catch (err) {
+      console.error(err);
+      setHasError(true);
+    }
+  };
+
+  const isEmpty = !loading && !hasError && Object.keys(wardrobe).length === 0;
 
   return (
-    <div>
-      <h1>Moj Ormar</h1>
-      {Object.keys(wardrobe).length === 0 && <p>Ormar je prazan!</p>}
+    <div className="uploadPage">
+      <header className="uploadTop">
+        <div className="uploadTopInner">
+          <div>
+            <h1 className="uploadTitle">Moj ormar</h1>
+            <p className="uploadSub">Pregled i organizacija odjevnih predmeta.</p>
+          </div>
 
-      {Object.entries(wardrobe).map(([category, items]) => (
-        <div key={category} style={{ marginBottom: "2rem" }}>
-          <h2>{category}</h2>
-          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-            {items.map((item) => (
-            <div
-                key={item.id}
-                style={{
-                border: "1px solid #ccc",
-                padding: "10px",
-                borderRadius: "8px",
-                width: "150px",
-                textAlign: "center",
-                position: "relative",
-                }}
-            >
-                <img
-                src={`http://localhost:8000/storage/${item.image_url}`}
-                alt={item.name || item.category}
-                style={{ width: "100%", height: "150px", objectFit: "cover" }}
-                />
-                <p>{item.name || item.category}</p>
-                <div
-                style={{
-                    width: "20px",
-                    height: "20px",
-                    backgroundColor: item.color,
-                    margin: "0 auto",
-                    borderRadius: "50%",
-                    border: "1px solid #000",
-                }}
-                ></div>
-
-                {/* Gumb za brisanje */}
-                <button
-                onClick={async () => {
-                    if (!window.confirm("Jeste li sigurni da želite obrisati ovaj predmet?")) return;
-
-                    try {
-                    await axios.delete(`http://localhost:8000/api/wardrobe/${item.id}`, {
-                        headers: {
-                        Authorization: `Bearer ${localStorage.getItem("token")}`,
-                        },
-                    });
-
-                    // ukloni item iz state-a
-                    setWardrobe((prev) => ({
-                        ...prev,
-                        [category]: prev[category].filter((i) => i.id !== item.id),
-                    }));
-                    } catch (err) {
-                    console.error(err);
-                    alert("Greška pri brisanju");
-                    }
-                }}
-                style={{
-                    position: "absolute",
-                    top: "5px",
-                    right: "5px",
-                    backgroundColor: "red",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "4px",
-                    padding: "2px 6px",
-                    cursor: "pointer",
-                }}
-                >
-                ✖
-                </button>
-            </div>
-            ))}
-
+          <div className="dash-nav">
+            <Link to="/dashboard" className="dash-navBtn">Dashboard</Link>
+            <Link to="/wardrobe/add" className="dash-navBtn outline">Dodaj</Link>
           </div>
         </div>
-      ))}
+      </header>
+
+      <main className="uploadMain">
+        <div className="uploadCard">
+          <div className="wInner">
+            {loading ? <div className="wLoading">Učitavanje ormara...</div> : null}
+
+            {!loading && (isEmpty || hasError) ? (
+              <div className="wEmpty">
+                <div className="wEmptyIcon">👗</div>
+
+                <div className="wEmptyTitle">
+                  {hasError ? "Ne mogu učitati ormar" : "Ormar je prazan"}
+                </div>
+
+                <div className="wEmptyText">
+                  {hasError
+                    ? "Probaj ponovno ili se ulogiraj pa pokušaj opet."
+                    : "Dodaj prvi odjevni predmet da kreneš."}
+                </div>
+
+                <div className="wEmptyActions">
+                  <Link to="/wardrobe/add" className="primaryBtnLink">
+                    Dodaj odjevni predmet
+                  </Link>
+
+                  {hasError ? (
+                    <>
+                      <button className="primaryBtn small" onClick={fetchWardrobe}>
+                        Pokušaj ponovno
+                      </button>
+                      <Link to="/login" className="ghostBtn">
+                        Login
+                      </Link>
+                    </>
+                  ) : null}
+                </div>
+              </div>
+            ) : null}
+
+            {!loading && !hasError && !isEmpty ? (
+              <div className="wSections">
+                {Object.entries(wardrobe).map(([category, items]) => (
+                  <section key={category} className="wSection">
+                    <div className="wSectionHead">
+                      <h2 className="wSectionTitle">{category}</h2>
+                      <div className="wSectionCount">{items.length} kom</div>
+                    </div>
+
+                    <div className="wGrid">
+                      {items.map((item) => (
+                        <article key={item.id} className="wItem">
+                          <button
+                            className="wDelete"
+                            onClick={() => handleDelete(category, item.id)}
+                            aria-label="Obriši"
+                            title="Obriši"
+                          >
+                            ✖
+                          </button>
+
+                          <div className="wImg">
+                            <img
+                              src={`http://localhost:8000/storage/${item.image_url}`}
+                              alt={item.name || item.category}
+                              loading="lazy"
+                            />
+                          </div>
+
+                          <div className="wBody">
+                            <div className="wName">{item.name || item.category}</div>
+
+                            <div className="wMeta">
+                              <span className="wTag">{item.category}</span>
+                              {item.season ? <span className="wTag">{item.season}</span> : null}
+                            </div>
+
+                            <div className="wColorRow">
+                              <span className="wColorLabel">Boja</span>
+                              <span
+                                className="wColorDot"
+                                style={{ backgroundColor: item.color || "#ddd" }}
+                                title={item.color || ""}
+                              />
+                            </div>
+                          </div>
+                        </article>
+                      ))}
+                    </div>
+                  </section>
+                ))}
+              </div>
+            ) : null}
+          </div>
+        </div>
+      </main>
     </div>
   );
 }
