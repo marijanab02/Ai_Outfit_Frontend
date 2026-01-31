@@ -1,0 +1,230 @@
+.uploadPage {
+  min-height: 100vh;
+  background: #f9dbf1;
+  display: flex;
+  flex-direction: column;
+}
+
+.uploadTop {
+  padding: 18px;
+  background: rgba(209, 107, 165, 0.25);
+  backdrop-filter: blur(6px);
+}
+
+.uploadTopInner {
+  width: min(1100px, 96vw);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.uploadTitle {
+  margin: 0;
+  color: #fff;
+  font-weight: 900;
+  text-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
+}
+
+.uploadSub {
+  margin: 6px 0 0;
+  color: rgba(255, 255, 255, 0.92);
+  font-weight: 700;
+}
+
+.uploadMain {
+  flex: 1;
+  padding: 18px 18px 32px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.uploadCard {
+  width: min(1100px, 96vw);
+  min-height: calc(100vh - 220px);
+  background: rgba(255, 255, 255, 0.72);
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  border-radius: 28px;
+  box-shadow: 0 26px 54px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(14px);
+  margin-top: -10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.uploadForm {
+  width: 100%;
+  max-width: 700px;
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+/* ===== DROP ZONE ===== */
+.dropZone {
+  /* visina okvira */
+  min-height: clamp(220px, 42vh, 340px);
+
+  border-radius: 26px;
+  border: 2.5px dashed rgba(122, 25, 69, 0.30);
+  background: rgba(168, 50, 100, 0.07);
+  padding: 42px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  /* ⬅️ VAŽNO: ne flex (da preview ne bude “stisnut”) */
+  display: block;
+}
+
+.dropZone:hover {
+  background: rgba(168, 50, 100, 0.12);
+  border-color: rgba(122, 25, 69, 0.45);
+  transform: translateY(-1px);
+}
+
+.dropZone input {
+  display: none;
+}
+
+/* kad NEMA slike, centriramo samo ovaj dio */
+.dropInner {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(220px, 42vh, 340px);
+}
+
+.dropIcon {
+  width: 68px;
+  height: 68px;
+  border-radius: 20px;
+  display: grid;
+  place-items: center;
+  background: rgba(168, 50, 100, 0.18);
+  font-size: 32px;
+}
+
+.dropHeadline {
+  font-weight: 900;
+  font-size: 19px;
+  color: #7a1945;
+}
+
+.dropHint {
+  margin-top: 6px;
+  font-weight: 700;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+/* ===== PREVIEW SLIKE ===== */
+.imagePreview {
+  width: 100%;
+  height: clamp(240px, 42vh, 360px);   /* ⬅️ stabilno i responsivno */
+  border-radius: 22px;
+  overflow: hidden;                   /* ⬅️ ništa van */
+  position: relative;
+  background: rgba(255, 255, 255, 0.75);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imagePreview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;                /* ⬅️ cijela slika u okviru */
+  object-position: center;
+  display: block;
+}
+
+.changeHint {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  backdrop-filter: blur(6px);
+}
+
+/* ===== ERROR ===== */
+.errorBox {
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(180, 40, 60, 0.10);
+  border: 1px solid rgba(180, 40, 60, 0.20);
+  color: rgba(140, 20, 40, 1);
+  font-weight: 800;
+}
+
+/* ===== GUMB ===== */
+.primaryBtn {
+  align-self: center;
+  min-width: 220px;
+  height: 48px;
+  padding: 0 28px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 900;
+  font-size: 15px;
+  color: #fff;
+  background: linear-gradient(135deg, #a83264, #c04a7a);
+  box-shadow: 0 16px 30px rgba(168, 50, 100, 0.28);
+  transition: all 0.25s ease;
+}
+
+.primaryBtn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 20px 36px rgba(168, 50, 100, 0.35);
+}
+
+.primaryBtn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 760px) {
+  .uploadCard {
+    min-height: auto;
+  }
+
+  .uploadForm {
+    padding: 26px;
+  }
+
+  .dropZone {
+    padding: 30px;
+  }
+
+  .dropInner {
+    min-height: 220px;
+  }
+
+  .dropIcon {
+    width: 58px;
+    height: 58px;
+    font-size: 26px;
+  }
+
+  .dropHeadline {
+    font-size: 17px;
+  }
+
+  .imagePreview {
+    height: 260px;
+  }
+}

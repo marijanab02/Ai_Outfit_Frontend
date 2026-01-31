@@ -17,32 +17,28 @@ function Dashboard() {
         </div>
 
         <nav className="dash-nav">
-          <Link to="/login" className="dash-navBtn">
-            Login
-          </Link>
-          <Link to="/register" className="dash-navBtn outline">
-            Registracija
-          </Link>
+          <Link to="/login" className="dash-navBtn">Login</Link>
+          <Link to="/register" className="dash-navBtn outline">Registracija</Link>
         </nav>
       </header>
 
-      <main
-        className="dash-hero"
-        style={{ backgroundImage: `url(${heroImg})` }}
-      >
+      <main className="dash-hero" style={{ backgroundImage: `url(${heroImg})` }}>
         <div className="dash-overlay" />
 
-        <div className="dash-heroInner">
-          <div className="dash-heroContent">
-            <h1 className="dash-title">
-              Discover Your Perfect Style <br />
-              with Clueless Wardrobe
-            </h1>
+        <div className="dash-heroContent">
+          <h1 className="dash-title">
+            Discover Your Perfect Style <br />
+            with Clueless Wardrobe
+          </h1>
 
-            <div className="dash-actions">
-              <button className="dash-btn">Dodaj odjevni predmet</button>
-              <button className="dash-btn ghost">Moj ormar</button>
-            </div>
+          <div className="dash-actions">
+            <Link to="/wardrobe/add" className="dash-btn">
+              Dodaj odjevni predmet
+            </Link>
+
+            <Link to="/wardrobe" className="dash-btn ghost">
+              Moj ormar
+            </Link>
           </div>
         </div>
       </main>
