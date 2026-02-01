@@ -14,6 +14,7 @@ function Login() {
       const res = await api.post("/login", { email, password });
       localStorage.setItem("token", res.data.token);
       alert("Sign in successful!");
+      navigate("/dashboard");
     } catch (err) {
       alert("Sign in failed!");
     }
@@ -22,7 +23,7 @@ function Login() {
   return (
     <div className="login-page">
       <div className="login-card">
-        {/* LIJEVO */}
+      
         <div
           className="login-left"
           style={{ backgroundImage: `url(${fashionImg})` }}
@@ -34,8 +35,6 @@ function Login() {
             </div>
           </div>
         </div>
-
-        {/* DESNO */}
         <div className="login-right">
           <div className="avatar">👤</div>
           <h2>SIGN IN</h2>
@@ -62,7 +61,7 @@ function Login() {
             className="forgot"
             onClick={() => navigate("/register")}
           >
-            SIGN UP
+            Don’t have an account? Sign up
           </span>
 
           <button onClick={login} className="login-btn">
