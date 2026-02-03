@@ -58,20 +58,17 @@
   justify-content: center;
 }
 
-/* unutarnji padding kao “forma” */
 .wInner {
   width: 100%;
   padding: 26px;
 }
 
-/* ===== LOADING ===== */
 .wLoading {
   font-weight: 900;
   color: #7a1945;
   padding: 10px 8px 18px;
 }
 
-/* ===== EMPTY STATE (haljinica) ===== */
 .wEmpty {
   padding: 42px 22px;
   display: grid;
@@ -103,7 +100,6 @@
   justify-content: center;
 }
 
-/* reuse button vibe */
 .primaryBtn {
   align-self: center;
   min-width: 220px;
@@ -166,7 +162,6 @@
   border: 2px solid rgba(122, 25, 69, 0.25);
 }
 
-/* ===== SECTIONS + GRID ===== */
 .wSections {
   display: grid;
   gap: 18px;
@@ -236,12 +231,19 @@
 .wImg {
   height: 170px;
   background: rgba(209, 107, 165, 0.18);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 .wImg img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
   display: block;
 }
 
@@ -299,6 +301,7 @@
   .uploadCard { min-height: auto; }
   .wInner { padding: 18px; }
   .wGrid { grid-template-columns: repeat(2, 1fr); }
+  .wImg { height: 200px; padding: 10px; }
 }
 
 @media (max-width: 520px) {

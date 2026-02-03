@@ -57,7 +57,7 @@
   border-radius: 22px;
   font-weight: 800;
   color: #fff;
-  background: rgba(168, 50, 100, 0.75);
+  background: #a83264;
   box-shadow: 0 12px 22px rgba(168, 50, 100, 0.20);
 }
 
@@ -108,10 +108,19 @@
 .dash-actions {
   margin-top: 28px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;  
+  align-items: center;      
+  gap: 18px;
+}
+
+.dash-actions-row {
+  display: flex;
   gap: 14px;
+  justify-content: center;
   flex-wrap: wrap;
 }
+
+
 
 .dash-btn {
   text-decoration: none;
