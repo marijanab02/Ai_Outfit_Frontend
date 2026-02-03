@@ -35,6 +35,7 @@ function Dashboard() {
             <Link to="/wardrobe/add" className="dash-btn">
               Dodaj odjevni predmet
             </Link>
+
             <div className="dash-actions-row">
               <Link to="/outfit-suggestion" className="dash-btn ghost">
                 Style Me
@@ -42,6 +43,10 @@ function Dashboard() {
 
               <Link to="/wardrobe" className="dash-btn ghost">
                 Moj ormar
+              </Link>
+
+              <Link to="/outfits" className="dash-btn ghost">
+                Moje kombinacije
               </Link>
             </div>
           </div>

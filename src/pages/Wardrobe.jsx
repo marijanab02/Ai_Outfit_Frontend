@@ -82,7 +82,7 @@ export default function Wardrobe() {
           </div>
 
           <div className="dash-nav">
-            <Link to="/dashboard" className="dash-navBtn">Dashboard</Link>
+            <Link to="/dashboard" className="dash-navBtn">← Dashboard</Link>
             <Link to="/wardrobe/add" className="dash-navBtn outline">Dodaj</Link>
           </div>
         </div>
