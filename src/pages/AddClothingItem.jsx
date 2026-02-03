@@ -71,7 +71,7 @@ export default function AddClothingItem() {
           </div>
 
           <div className="dash-nav">
-            <Link to="/dashboard" className="dash-navBtn">Natrag</Link>
+            <Link to="/dashboard" className="dash-navBtn">← Dashboard</Link>
             <Link to="/wardrobe" className="dash-navBtn outline">Moj ormar</Link>
           </div>
 

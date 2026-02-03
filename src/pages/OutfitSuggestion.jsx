@@ -102,7 +102,7 @@ export default function OutfitSuggestion() {
         </div>
 
         <nav className="os-nav">
-          <Link to="/dashboard" className="os-link">Dashboard</Link>
+          <Link to="/dashboard" className="os-link">← Dashboard</Link>
           <Link to="/wardrobe" className="os-link outline">Moj ormar</Link>
         </nav>
       </header>
