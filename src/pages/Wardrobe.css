@@ -292,6 +292,12 @@
   border-radius: 999px;
   border: 1px solid rgba(0, 0, 0, 0.25);
 }
+.uploadHeadLeft {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
 
 @media (max-width: 1020px) {
   .wGrid { grid-template-columns: repeat(3, 1fr); }

@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import "./AddClothingItem.css";
 import "./Dashboard.css";
 
+import logoImg from "../assets/logo.jpeg";
+
 export default function AddClothingItem() {
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -46,7 +48,7 @@ export default function AddClothingItem() {
       const msg = err?.response?.data?.message || err?.response?.data?.error;
 
       if (status) setErrMsg(`${status}: ${msg || "Greška na serveru"}`);
-      else setErrMsg("Ne mogu doći do servera (CORS ili server ne radi).");
+      else setErrMsg("Ne mogu doći do servera.");
     } finally {
       setLoading(false);
     }
@@ -56,15 +58,23 @@ export default function AddClothingItem() {
     <div className="uploadPage">
       <header className="uploadTop">
         <div className="uploadTopInner">
-          <div>
-            <h1 className="uploadTitle">Dodaj odjevni predmet</h1>
-            <p className="uploadSub">Učitaj sliku i spremi u ormar.</p>
+
+          <div className="uploadHeadLeft">
+            <div className="dash-logo">
+              <img src={logoImg} alt="logo" />
+            </div>
+
+            <div>
+              <h1 className="uploadTitle">Dodaj odjevni predmet</h1>
+              <p className="uploadSub">Učitaj sliku i spremi u ormar.</p>
+            </div>
           </div>
 
           <div className="dash-nav">
             <Link to="/dashboard" className="dash-navBtn">Natrag</Link>
             <Link to="/wardrobe" className="dash-navBtn outline">Moj ormar</Link>
           </div>
+
         </div>
       </header>
 

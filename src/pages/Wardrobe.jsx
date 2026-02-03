@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import "./Wardrobe.css";
 import "./Dashboard.css";
 
+import logoImg from "../assets/logo.jpeg";
+
 export default function Wardrobe() {
   const [wardrobe, setWardrobe] = useState({});
   const [loading, setLoading] = useState(true);
@@ -22,12 +24,9 @@ export default function Wardrobe() {
         return;
       }
 
-    const res = await axios.get("http://localhost:8000/api/wardrobe", {
-  headers: { Authorization: `Bearer ${token}` },
-});
-
-
-
+      const res = await axios.get("http://localhost:8000/api/wardrobe", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       setWardrobe(res.data || {});
     } catch (err) {
@@ -43,7 +42,7 @@ export default function Wardrobe() {
     if (didFetch.current) return;
     didFetch.current = true;
     fetchWardrobe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, []);
 
   const handleDelete = async (category, itemId) => {
@@ -51,12 +50,9 @@ export default function Wardrobe() {
 
     try {
       const token = localStorage.getItem("token");
-    await axios.delete(`http://localhost:8000/api/wardrobe/${itemId}`, {
-  headers: { Authorization: `Bearer ${token}` },
-});
-
-
-
+      await axios.delete(`http://localhost:8000/api/wardrobe/${itemId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       setWardrobe((prev) => ({
         ...prev,
@@ -74,9 +70,15 @@ export default function Wardrobe() {
     <div className="uploadPage">
       <header className="uploadTop">
         <div className="uploadTopInner">
-          <div>
-            <h1 className="uploadTitle">Moj ormar</h1>
-            <p className="uploadSub">Pregled i organizacija odjevnih predmeta.</p>
+          <div className="uploadHeadLeft">
+            <div className="dash-logo">
+              <img src={logoImg} alt="logo" />
+            </div>
+
+            <div>
+              <h1 className="uploadTitle">Moj ormar</h1>
+              <p className="uploadSub">Pregled i organizacija odjevnih predmeta.</p>
+            </div>
           </div>
 
           <div className="dash-nav">

@@ -22,6 +22,10 @@ function Register() {
     setColors((prev) => [...prev, color.hex]);
   };
 
+  const removeColor = (indexToRemove) => {
+    setColors((prev) => prev.filter((_, i) => i !== indexToRemove));
+  };
+
   const register = async () => {
     if (password !== passwordConfirmation) {
       alert("Passwords do not match!");
@@ -50,7 +54,6 @@ function Register() {
   return (
     <div className="login-page">
       <div className="login-card register-card">
-        {/* LIJEVO */}
         <div
           className="login-left"
           style={{ backgroundImage: `url(${fashionImg})` }}
@@ -63,12 +66,10 @@ function Register() {
           </div>
         </div>
 
-        {/* DESNO */}
         <div className="login-right register-right">
           <div className="avatar">👤</div>
           <h2>SIGN UP</h2>
 
-          {/* 2 stupca */}
           <div className="form-grid">
             <div className="input-group">
               <input
@@ -122,7 +123,6 @@ function Register() {
             </div>
           </div>
 
-          {/* Color preferences - otvara se na klik */}
           <div className="colors-block">
             <div className="colors-label">Color preferences</div>
 
@@ -144,7 +144,9 @@ function Register() {
                 <span
                   key={`${c}-${idx}`}
                   className="color-dot"
-                  style={{ background: c }}
+                  style={{ background: c, cursor: "pointer" }}
+                  onClick={() => removeColor(idx)}
+                  title="Remove color"
                 />
               ))}
             </div>
