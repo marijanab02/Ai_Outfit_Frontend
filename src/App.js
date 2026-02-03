@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import AddClothingItem from "./pages/AddClothingItem";
 import Wardrobe from "./pages/Wardrobe";
 import OutfitSuggestion from "./pages/OutfitSuggestion";
+import MyOutfits from "./pages/MyOutfits";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/wardrobe/add" element={<AddClothingItem />} />
         <Route path="/wardrobe" element={<Wardrobe />} />
         <Route path="/outfit-suggestion" element={<OutfitSuggestion />} />
+        <Route path="/outfits" element={<MyOutfits />} />
 
         {/* fallback */}
         <Route path="*" element={<div style={{ padding: 40 }}>Stranica ne postoji.</div>} />

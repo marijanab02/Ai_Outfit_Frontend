@@ -50,8 +50,40 @@ export default function OutfitSuggestion() {
     } finally {
       setLoading(false);
     }
-  };
 
+
+  };
+  const saveOutfit = async () => {
+      try {
+        const token = localStorage.getItem("token");
+
+        const itemIds = Object.values(outfitObj).map(
+          (item) => item.id
+        );
+
+        await axios.post(
+          "http://127.0.0.1:8000/api/outfit/select",
+          {
+            items: itemIds,
+            temperature: temp,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        alert("Outfit spremljen za danas ✨");
+      } catch (e) {
+        alert(
+          e?.response?.data?.error ||
+          "Greška pri spremanju outfita"
+        );
+      }
+    };
   const temp = outfit?.temperature;
   const outfitObj = outfit?.outfit;
 
@@ -131,6 +163,16 @@ export default function OutfitSuggestion() {
         {!outfitObj && !loading && !err && (
           <div className="os-empty">
             Klikni za svoj outfit dana - bez razmišljanja
+          </div>
+        )}
+        {outfitObj && (
+          <div className="os-actions">
+            <button
+              className="os-btn outline"
+              onClick={saveOutfit}
+            >
+              Odaberi outfit za danas
+            </button>
           </div>
         )}
       </main>
