@@ -24,14 +24,14 @@
 .uploadTitle {
   margin: 0;
   color: #fff;
-  font-weight: 900;
+  font-weight: 900px;
   text-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
 }
 
 .uploadSub {
   margin: 6px 0 0;
   color: rgba(255, 255, 255, 0.92);
-  font-weight: 700;
+  font-weight: 900;
 }
 
 .uploadMain {
@@ -66,9 +66,9 @@
   gap: 26px;
 }
 
-/* ===== DROP ZONE ===== */
+
 .dropZone {
-  /* visina okvira */
+
   min-height: clamp(220px, 42vh, 340px);
 
   border-radius: 26px;
@@ -78,7 +78,6 @@
   cursor: pointer;
   transition: all 0.25s ease;
 
-  /* ⬅️ VAŽNO: ne flex (da preview ne bude “stisnut”) */
   display: block;
 }
 
@@ -92,7 +91,6 @@
   display: none;
 }
 
-/* kad NEMA slike, centriramo samo ovaj dio */
 .dropInner {
   display: flex;
   gap: 20px;
@@ -124,12 +122,11 @@
   color: rgba(0, 0, 0, 0.55);
 }
 
-/* ===== PREVIEW SLIKE ===== */
 .imagePreview {
   width: 100%;
-  height: clamp(240px, 42vh, 360px);   /* ⬅️ stabilno i responsivno */
+  height: clamp(240px, 42vh, 360px);   
   border-radius: 22px;
-  overflow: hidden;                   /* ⬅️ ništa van */
+  overflow: hidden;                   
   position: relative;
   background: rgba(255, 255, 255, 0.75);
 
@@ -141,7 +138,7 @@
 .imagePreview img {
   width: 100%;
   height: 100%;
-  object-fit: contain;                /* ⬅️ cijela slika u okviru */
+  object-fit: contain;                
   object-position: center;
   display: block;
 }
@@ -159,7 +156,6 @@
   backdrop-filter: blur(6px);
 }
 
-/* ===== ERROR ===== */
 .errorBox {
   padding: 14px 16px;
   border-radius: 18px;
@@ -169,7 +165,6 @@
   font-weight: 800;
 }
 
-/* ===== GUMB ===== */
 .primaryBtn {
   align-self: center;
   min-width: 220px;
@@ -196,7 +191,6 @@
   cursor: not-allowed;
 }
 
-/* ===== MOBILE ===== */
 @media (max-width: 760px) {
   .uploadCard {
     min-height: auto;
@@ -227,4 +221,9 @@
   .imagePreview {
     height: 260px;
   }
+}
+.uploadHeadLeft {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }

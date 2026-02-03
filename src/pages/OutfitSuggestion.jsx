@@ -2,6 +2,9 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./OutfitSuggestion.css";
+import "./Dashboard.css";
+
+import logoImg from "../assets/logo.jpeg";
 
 export default function OutfitSuggestion() {
   const [outfit, setOutfit] = useState(null);
@@ -32,7 +35,6 @@ export default function OutfitSuggestion() {
       if (!res.data?.outfit || Object.keys(res.data.outfit).length === 0) {
         setErr("Nema dostupne kombinacije za ovu temperaturu");
       }
-
     } catch (e) {
       setOutfit(null);
 
@@ -40,14 +42,11 @@ export default function OutfitSuggestion() {
 
       if (apiMsg === "Wardrobe is empty") {
         setErr("Tvoj ormar je prazan - dodaj par komada pa pokušaj opet");
-      } 
-      else if (apiMsg === "User location city not set") {
+      } else if (apiMsg === "User location city not set") {
         setErr("Lokacija nije postavljena - dodaj grad u profilu");
-      } 
-      else {
+      } else {
         setErr(apiMsg || "Nema outfita / greška na servisu.");
       }
-
     } finally {
       setLoading(false);
     }
@@ -60,6 +59,10 @@ export default function OutfitSuggestion() {
     <div className="os-page">
       <header className="os-header">
         <div className="os-brand">
+          <div className="dash-logo">
+            <img src={logoImg} alt="logo" />
+          </div>
+
           <div>
             <h2 className="os-title">Tvoj stil, bez razmišljanja</h2>
             <p className="os-sub">Jedan klik do gotovog outfita.</p>
@@ -82,7 +85,9 @@ export default function OutfitSuggestion() {
         {err && <div className="os-error">{err}</div>}
 
         {typeof temp !== "undefined" && temp !== null && (
-          <div className="os-pill">🌡️ Trenutna temperatura: <b>{temp}°C</b></div>
+          <div className="os-pill">
+            🌡️ Trenutna temperatura: <b>{temp}°C</b>
+          </div>
         )}
 
         {outfitObj && (
@@ -123,13 +128,11 @@ export default function OutfitSuggestion() {
           </div>
         )}
 
-    
         {!outfitObj && !loading && !err && (
           <div className="os-empty">
-            Klikni za svoj outfit dana - bez razmišljanja 
+            Klikni za svoj outfit dana - bez razmišljanja
           </div>
         )}
-
       </main>
 
       <footer className="os-footer">
