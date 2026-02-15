@@ -13,7 +13,36 @@ function Login() {
     try {
       const res = await api.post("/login", { email, password });
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user)); // <-- dodaj ovo
       alert("Sign in successful!");
+
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const { latitude, longitude } = position.coords;
+
+        const geoRes = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+        );
+
+        const geoData = await geoRes.json();
+        const city =
+          geoData.address.city ||
+          geoData.address.town ||
+          geoData.address.village;
+
+        if (city) {
+          await fetch(`http://localhost:8000/api/users/${res.data.user.id}`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${res.data.token}`,
+            },
+            body: JSON.stringify({
+              location_city: city,
+            }),
+          });
+        }
+        alert(`Grad je uspješno promijenjen u: ${city}`);
+      });
       navigate("/dashboard");
     } catch (err) {
       alert("Sign in failed!");
